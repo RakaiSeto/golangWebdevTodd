@@ -3,10 +3,18 @@ package main
 import (
 	"log"
 	"net/http"
+	"text/template"
 )
 
-func main() {
+var tpl *template.Template
 
+func init() {tpl = template.Must(template.ParseGlob("templates/*"))}
+
+func main() {
+	http.HandleFunc("/", index)
+	http.HandleFunc("/about/", about)
+	http.HandleFunc("/contact/", contact)
+	http.HandleFunc("/apply", apply)
 	http.ListenAndServe(":8080", nil)
 }
 
